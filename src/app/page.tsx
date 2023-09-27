@@ -1,113 +1,318 @@
-import Image from 'next/image'
+"use client";
+
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+
+import cardFront from "../images/bg-card-front.png";
+import cardBack from "../images/bg-card-back.png";
+
+import cardLogo from "../images/card-logo.svg";
+
+import desktopImg from "../images/bg-main-desktop.png";
+import mobileImg from "../images/bg-main-mobile.png";
+import thanksImg from "../images/icon-complete.svg";
+
+import CustomModal from "./CustomModal";
 
 export default function Home() {
+  const imageUrl = useWindowWidth() >= 650 ? desktopImg : mobileImg;
+
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+  const [cvv, setCvv] = useState("");
+
+  const [isNameEmpty, setIsNameEmpty] = useState(false);
+  const [isNumberEmpty, setIsNumberEmpty] = useState(false);
+  const [isMonthEmpty, setIsMonthEmpty] = useState(false);
+  const [isYearEmpty, setIsYearEmpty] = useState(false);
+  const [isCvvEmpty, setIsCvvEmpty] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const formatCardNumber = (input: string) => {
+    const numericValue = input.replace(/\D/g, "");
+
+    const formattedValue = numericValue.match(/.{1,4}/g)?.join(" ");
+
+    return formattedValue;
+  };
+
+  function containAlphabet(inputString: string) {
+    return /^[0-9]+$/.test(inputString);
+  }
+
+  function ChangeNumber(e: ChangeEvent<HTMLInputElement>) {
+    let cardNumber = e.target.value;
+
+    if (containAlphabet(cardNumber)) {
+      setNumber(cardNumber);
+    }
+  }
+
+  function changeMonth(e: ChangeEvent<HTMLInputElement>) {
+    let cardMonth = e.target.value;
+
+    if (containAlphabet(cardMonth)) {
+      const numericValue = parseInt(cardMonth);
+
+      if (numericValue > 12) {
+        cardMonth = "12";
+      }
+      setMonth(cardMonth);
+    }
+  }
+
+  function ChangeYear(e: ChangeEvent<HTMLInputElement>) {
+    let cardYear = e.target.value;
+
+    if (containAlphabet(cardYear)) {
+      setYear(cardYear);
+    }
+  }
+
+  function ChangeCvv(e: ChangeEvent<HTMLInputElement>) {
+    let cardcvv = e.target.value;
+
+    if (containAlphabet(cardcvv)) {
+      setCvv(cardcvv);
+    }
+  }
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    if (number === "") {
+      console.log("number empity");
+      setIsNumberEmpty(true);
+    }
+
+    if (name === "") {
+      console.log("name empity");
+      setIsNameEmpty(true);
+    }
+
+    if (month === "") {
+      console.log("month empity");
+      setIsMonthEmpty(true);
+    }
+
+    if (year === "") {
+      console.log("year empity");
+      setIsYearEmpty(true);
+    }
+
+    if (cvv === "") {
+      console.log("cvv empity");
+      setIsCvvEmpty(true);
+    }
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <>
+      <main className="flex flex-col gap-10 md:flex-row md:gap-0  ">
+        <section className=" img-container">
+          <img src={imageUrl.src} alt="background Image" className="bg-img" />
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
+          <img src={cardBack.src} alt="Card back side" className="cardBack" />
+          <p className="cardCvv fs-small">
+            <span className={`${cvv.length >= 1 ? "hidden" : "block"}`}>
+              000
             </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
+            {cvv}
           </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
+          <img
+            src={cardFront.src}
+            alt="Card front side"
+            className="cardFront"
+          />
+          <img
+            src={cardLogo.src}
+            alt="crdit card company log"
+            className="cardLogo"
+          />
+          <h2 className="cardNumber">
+            <span className={`${number.length >= 1 ? "hidden" : "block"}`}>
+              0000 0000 0000 0000
             </span>
+            {formatCardNumber(number)}
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
+          <p className="cardUsername fs-small">
+            <span className={`${name.length >= 1 ? "hidden" : "block"}`}>
+              Jane Appleseed
             </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
+            {name}
           </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
+          <p className="cardExpiryDate fs-small">
+            <span className={`${month.length >= 1 ? "hidden" : "block"}`}>
+              00/00
             </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
+            <span className={`${month.length >= 1 ? "block" : "hidden"}`}>
+              {month}/{year}
+            </span>
           </p>
-        </a>
-      </div>
-    </main>
-  )
+        </section>
+
+        <section className="form-container max-w-sm mx-auto mb-10 md:max-w-lg">
+          <form className="form-spacing  ">
+            <div className="flex flex-col mt-5">
+              <label className="form-spacing">CARDHOLDER NAME</label>
+              <input
+                className={`input-field px-4 py-2 rounded-md ${
+                  isNameEmpty ? "input-border-red" : ""
+                }`}
+                placeholder="e.g. Jane Appleseed"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                maxLength={20}
+                type="name"
+              />
+              <span
+                className={`${isNameEmpty ? "block" : "hidden"} text-red-500`}
+              >
+                Can't be blank
+              </span>
+            </div>
+
+            <div className="flex flex-col mt-5">
+              <label>CARD NUMBER</label>
+              <input
+                className={`input-field px-4 py-2 rounded-md ${
+                  isNumberEmpty ? "input-border-red" : ""
+                }`}
+                placeholder="e.g. 0000 0000 0000 0000"
+                value={number}
+                maxLength={16}
+                type="text"
+                pattern="\d*"
+                onChange={ChangeNumber}
+              />
+              <span
+                className={`${isNumberEmpty ? "block" : "hidden"} text-red-500`}
+              >
+                Can't be blank
+              </span>
+            </div>
+
+            <div className="flex justify-between mt-5">
+              <label>EXP. DATE (MM/YY)</label>
+              <label className="mr-28 lg:mr-36">CVC</label>
+            </div>
+
+            <div className="flex  justify-between">
+              <div className=" flex gap-2">
+                <div className="flex flex-col">
+                  <input
+                    className={`input-field input-sm px-3 py-2 rounded-md ${
+                      isMonthEmpty ? "input-border-red" : ""
+                    }`}
+                    placeholder="MM"
+                    value={month}
+                    onChange={changeMonth}
+                    maxLength={2}
+                  />
+                  <span
+                    className={` ${
+                      isMonthEmpty ? "block" : "hidden"
+                    } text-red-500`}
+                  >
+                    Can't be blank
+                  </span>
+                </div>
+
+                <div className="flex flex-col">
+                  <input
+                    className={`input-field input-sm px-3 py-2 rounded-md ${
+                      isYearEmpty ? "input-border-red" : ""
+                    }`}
+                    placeholder="YY"
+                    value={year}
+                    onChange={ChangeYear}
+                    maxLength={2}
+                  />
+                  <span
+                    className={` ${
+                      isYearEmpty ? "block" : "hidden"
+                    } text-red-500`}
+                  >
+                    Can't be blank
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <input
+                  className={`input-field input-lg px-4 py-2 rounded-md ${
+                    isCvvEmpty ? "input-border-red" : ""
+                  }`}
+                  placeholder="e.g. 123"
+                  value={cvv}
+                  onChange={ChangeCvv}
+                  maxLength={3}
+                />
+                <span
+                  className={` ${
+                    isYearEmpty ? "block" : "hidden"
+                  } text-red-500`}
+                >
+                  Can't be blank
+                </span>
+              </div>
+            </div>
+            {/* <div className="flex gap-10">
+
+
+               
+                </div>
+                */}
+
+            <div className="flex ">
+              <button
+                type="button"
+                // onClick={openModal}
+                onClick={handleSubmit}
+                className="grow px-2 py-2 btn-color mt-5 rounded-md"
+              >
+                Confirm
+              </button>
+              <CustomModal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                contentLabel="ThankYou-Modal"
+              >
+                <main className="thanks-modal flex flex-col gap-5 items-center">
+                  <img src={thanksImg.src} alt="thanksIcon" className="w-20 " />
+                  <h1 className="text-center text-xl">THANK YOU!</h1>
+                  <p className="text-center fs-small text-slate-500">
+                    We've added your card details
+                  </p>
+                </main>
+              </CustomModal>
+            </div>
+          </form>
+        </section>
+      </main>
+    </>
+  );
 }
+
+const useWindowWidth = () => {
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+
+    const handleWindowResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
+
+  return windowWidth;
+};

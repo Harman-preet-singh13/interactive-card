@@ -3,25 +3,346 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+  --fc-white: hsl(0, 0%, 100%);
+  --fc-light-violet: hsl(270, 3%, 87%);
+  --fc-dark-violet: hsl(279, 6%, 55%);
+  --fc-Extra-dark: hsl(278, 68%, 11%);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --fc-red: hsl(0, 100%, 66%);
+  --c-bg: hsl(249, 99%, 64%) to hsl(278, 94%, 30%);
+
+  --fs-primary: 16px;
+  --fs-secondary: 20px;
+  --fs-small: 12px;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  height: 100vh;
+  height: 100dvh;
+
+  background-color: var(--fc-white);
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--fc-Extra-dark);
+  font-size: var(--fs-primary);
+  font-weight: 600;
 }
+
+p {
+  color: var(--fc-light-violet);
+  font-weight: 500;
+}
+
+h2 {
+  color: var(--fc-light-violet);
+  font-weight: 500;
+}
+
+.fs-small {
+  font-size: var(--fs-small);
+}
+
+.img-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  grid-template-rows: repeat(6, 50px);
+}
+
+.bg-img {
+  width: 100%;
+  grid-column: 1/7;
+}
+
+.cardBack {
+  grid-column: 2/6;
+}
+
+.cardFront {
+  margin-left: 20px;
+  grid-column: 1/5;
+  grid-row: 4/4;
+}
+
+.cardLogo {
+  grid-column: 2;
+  grid-row: 4;
+  margin-top: 15px;
+  margin-left: -15px;
+}
+
+.cardNumber {
+  grid-column: 2/6;
+  grid-row: 5;
+  margin-top: 25px;
+}
+
+.cardUsername {
+  grid-column: 2/4;
+  grid-row: 6;
+  margin-top: 5px;
+  margin-left: -20px;
+}
+
+.cardExpiryDate {
+  grid-column: 4/4;
+  grid-row: 6;
+  margin-top: 5px;
+  margin-left: 30px;
+}
+
+.cardCvv {
+  grid-column: 5;
+  grid-row: 3;
+  margin-top: 8px;
+}
+
+@media (min-width: 425px) {
+  .cardNumber {
+    margin-top: 35px;
+  }
+
+  .cardUsername {
+    grid-column: 2/4;
+    grid-row: 6;
+    margin-top: 20px;
+    margin-left: -20px;
+  }
+
+  .cardExpiryDate {
+    grid-column: 4/4;
+    grid-row: 6;
+    margin-top: 20px;
+    margin-left: 30px;
+  }
+  .cardCvv {
+    grid-column: 5;
+    grid-row: 3;
+    margin-top: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .img-container {
+    height: 100vh;
+
+    grid-template-columns: repeat(6, 1fr);
+
+    grid-template-rows: repeat(6, 1fr);
+  }
+  .bg-img {
+    width: 100%;
+    height: 100%;
+    grid-column: 1/5;
+    grid-row: 1/7;
+  }
+  .cardBack {
+    grid-column: 3/7;
+    grid-row: 4;
+    margin-top: 30px;
+  }
+
+  .cardFront {
+    margin-left: 0px;
+    grid-column: 2/6;
+    grid-row: 3;
+  }
+
+  .cardLogo {
+    grid-column: 2;
+    grid-row: 3;
+    margin-top: 15px;
+    margin-left: 15px;
+  }
+
+  .cardNumber {
+    grid-column: 3/6;
+    grid-row: 4;
+    margin-left: -15px;
+    margin-top: -80px;
+  }
+
+  .cardUsername {
+    grid-column: 3/6;
+    grid-row: 4;
+    margin-left: -30px;
+    margin-top: -40px;
+  }
+
+  .cardExpiryDate {
+    grid-column: 3/6;
+    grid-row: 4;
+    margin-left: 150px;
+    margin-top: -40px;
+  }
+
+  .cardCvv {
+    grid-column: 5;
+    grid-row: 4;
+    align-self: center;
+    margin-top: 30px;
+    margin-left: 100px;
+  }
+
+  .form-container {
+    display: flex;
+    align-items: center;
+    margin: 50px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .img-container p {
+    font-size: var(--fs-primary);
+  }
+
+  .img-container h2 {
+    font-size: var(--fs-secondary);
+  }
+
+  .bg-img {
+    grid-column: 1/6;
+  }
+  .cardBack {
+    grid-column: 2/7;
+    margin-left: 50px;
+  }
+
+  .cardFront {
+    grid-column: 1/6;
+    margin-left: 50px;
+  }
+
+  .cardCvv {
+    margin-right: -50px;
+  }
+
+  .cardNumber {
+    margin-top: -85px;
+  }
+
+  .form-container {
+    display: flex;
+    align-items: center;
+    margin: 100px;
+  }
+
+  .form-spacing {
+    font-size: var(--fs-primary) !important;
+  }
+
+  .input-sm {
+    max-width: 100px !important;
+  }
+
+  .input-lg {
+    max-width: 200px !important;
+  }
+}
+
+@media (min-width: 1440px) {
+
+  .bg-img {
+    grid-column: 1/5;
+  }
+  .cardBack {
+    grid-column: 3/7;
+  }
+
+  .cardFront {
+    grid-column: 2/6;
+  }
+
+  .cardCvv {
+    grid-column:5;
+  }
+
+  .cardNumber {
+    font-size: 24px !important;
+    margin-top: -100px;
+    margin-left:-5px;
+  }
+
+  .cardExpiryDate{
+    margin-left:250px;
+  }
+
+  .cardLogo{
+    margin-top:20px;
+    margin-left:70px;
+  }
+}
+
+.form-spacing {
+  font-size: var(--fs-small);
+}
+
+.input-field:hover {
+  border: 2px solid var(--fc-Extra-dark);
+}
+.input-field:active {
+  border: 2px solid var(--fc-Extra-dark);
+}
+
+.input-field:focus {
+  border: 2px solid var(--fc-Extra-dark);
+}
+
+.input-field {
+  border: 1px solid var(--fc-light-violet);
+  transition: border-color 0.3s;
+}
+
+.input-border-red{
+  border: 1px solid var(--fc-red) !important;
+}
+
+.input-sm {
+  max-width: 50px;
+}
+
+.input-lg {
+  max-width: 150px;
+}
+
+.btn-color {
+  color: var(--fc-white);
+  background-color: var(--fc-Extra-dark);
+}
+
+.btn-color:hover{
+  color:var(--fc-Extra-dark);
+  background-color: var(--fc-white);
+  border:1px solid var(--fc-dark-violet);
+}
+
+
+/* modal */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modal-content {
+  width: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--fc-white);
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+@media (min-width:1024px) {
+  .modal-content{
+    width: 400px;
+  }
+}
+
