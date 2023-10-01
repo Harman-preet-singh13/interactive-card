@@ -110,6 +110,7 @@ export default function Home() {
       console.log("cvv empity");
       setIsCvvEmpty(true);
     }
+    setIsModalOpen(true)
   }
 
   return (
